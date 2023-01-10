@@ -41,25 +41,19 @@ public class main {
                 monedas.add(new Moneda("euro", 1.07));
                 monedas.add(new Moneda("libra esterlina", 1.22));
 
-                Moneda monedaSeleccionada = (Moneda) JOptionPane.showInputDialog(null,
-                        "Elija moneda base", "Input",
-                        JOptionPane.INFORMATION_MESSAGE, null,
-                        monedas.toArray(), monedas.get(0).getNombre());
+                Moneda monedaBase = introducirBase(monedas);
 
-                Moneda valorConversor
-                        = (Moneda) JOptionPane.showInputDialog(null,
-                                "Elija moneda a convertir", "Input",
-                                JOptionPane.INFORMATION_MESSAGE, null,
-                                monedas.stream().filter(moneda -> !moneda.getNombre().equalsIgnoreCase(monedaSeleccionada.getNombre())).collect(Collectors.toList()).toArray(),
-                                monedas.get(0).getNombre());
+                Moneda monedaConversor=conversorBase(monedas, monedaBase);
 
                 double valorConverir = introducirValor();
-                double valorConvertido = monedaSeleccionada.obtenerConversion(valorConversor, valorConverir);
-                JOptionPane.showMessageDialog(null, ("El valor en " + valorConversor.getNombre()
+                
+                double valorConvertido = monedaBase.obtenerConversion(monedaConversor, valorConverir);
+                JOptionPane.showMessageDialog(null, ("El valor en " + monedaConversor.getNombre()+"s"
                         + " es de " + numberFormat.format(valorConvertido)));
                 break;
             case 1:
-                /*List<Distancia> distancias = new ArrayList<>();
+                
+                List<Distancia> distancias = new ArrayList<>();
 
                 distancias.add(new Distancia("metro", 1));
                 distancias.add(new Distancia("milimetro", 0.001));
@@ -67,23 +61,16 @@ public class main {
                 distancias.add(new Distancia("kilometro",1000));
                 distancias.add(new Distancia("milla", 0.000621371));
                 distancias.add(new Distancia("pie",0.3048));
+                
+                Distancia distanciaBase = introducirBase(distancias);
 
-                Distancia distanciaSeleccionada = (Distancia) JOptionPane.showInputDialog(null,
-                        "Elija moneda base", "Input",
-                        JOptionPane.INFORMATION_MESSAGE, null,
-                        distancias.toArray(), distancias.get(0).getNombre());
-
-                Distancia distanciaConversor
-                        = (Distancia) JOptionPane.showInputDialog(null,
-                                "Elija moneda a convertir", "Input",
-                                JOptionPane.INFORMATION_MESSAGE, null,
-                                distancias.stream().filter(moneda -> !moneda.getNombre().equalsIgnoreCase(distanciaSeleccionada.getNombre())).collect(Collectors.toList()).toArray(),
-                                distancias.get(0).getNombre());
+                Distancia distanciaConversor= conversorBase(distancias, distanciaBase);
 
                 valorConverir = introducirValor();
-                valorConvertido = distanciaSeleccionada.obtenerConversion(distanciaConversor, valorConverir);
-                JOptionPane.showMessageDialog(null, ("El valor en " + distanciaConversor.getNombre()
-                        + " es de " + numberFormat.format(valorConvertido)));**/
+                
+                 valorConvertido = distanciaBase.obtenerConversion(distanciaConversor, valorConverir);
+                JOptionPane.showMessageDialog(null, ("El valor en " + distanciaConversor.getNombre()+"s"
+                        + " es de " + numberFormat.format(valorConvertido)));
                 break;
 
             case 2:
@@ -121,5 +108,35 @@ public class main {
             return introducirValor();
         }
     }
+    
+     public static <T extends Cambio> T introducirBase(List<T> valoresCambios)
+     {
+         T distanciaSeleccionada = (T) JOptionPane.showInputDialog(null,
+                        "Elija moneda base", "Input",
+                        JOptionPane.INFORMATION_MESSAGE, null,
+                        valoresCambios.toArray(), valoresCambios.get(0).getNombre());
+         return distanciaSeleccionada;
+     }
+     
+     
+     /**
+      * Se encarga de llamar al cambio en que se desea convertir el primer cambio
+      * @param valoresCambios lista donde T representa una clase que hereda de Cambio
+      * con todos los cambio que se desea mostrar
+      * @param cambioBase cambio que se desea convertir en otra unidad
+      * @return retorna el objeto seleccionado de la lista de  valoresCambios
+      **/
+     public static <T extends Cambio> T conversorBase (List<T> valoresCambios,T cambioBase)
+     {
+          T distanciaConversor
+                        = (T) JOptionPane.showInputDialog(null,
+                                "Elija moneda a convertir", "Input",
+                                JOptionPane.INFORMATION_MESSAGE, null,
+                                valoresCambios.stream().filter(cambio -> !cambio.getNombre().equalsIgnoreCase(cambioBase.getNombre())).collect(Collectors.toList()).toArray(),
+                                valoresCambios.get(0).getNombre());
+          
+          return distanciaConversor;
+     }
+    
 
 }
