@@ -3,9 +3,7 @@
  */
 package conversor;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
@@ -21,9 +19,11 @@ public class main {
      */
     public static void main(String[] args) {
 
-        DecimalFormat numberFormat = new DecimalFormat("#.00");
         String[] tipoConversor = {"Moneda", "Distancia", "Tiempo"};
-        Object valorSeleccionado = JOptionPane.showInputDialog(null,
+        boolean continuar = true;
+        
+        do {
+            Object valorSeleccionado = JOptionPane.showInputDialog(null,
                 "Elija uno", "Input",
                 JOptionPane.INFORMATION_MESSAGE, null,
                 tipoConversor, tipoConversor[0]);
@@ -46,10 +46,17 @@ public class main {
                 Moneda monedaConversor=conversorBase(monedas, monedaBase);
 
                 double valorConverir = introducirValor();
+                double valorConvertido ;
+                try 
+                {
+                     valorConvertido = monedaBase.obtenerConversion(monedaConversor, valorConverir);
+                } catch (Exception e) {
+                    break;
+                }
                 
-                double valorConvertido = monedaBase.obtenerConversion(monedaConversor, valorConverir);
+                
                 JOptionPane.showMessageDialog(null, ("El valor en " + monedaConversor.getNombre()+"s"
-                        + " es de " + numberFormat.format(valorConvertido)));
+                        + " es de " +valorConvertido));
                 break;
             case 1:
                 
@@ -70,15 +77,41 @@ public class main {
                 
                  valorConvertido = distanciaBase.obtenerConversion(distanciaConversor, valorConverir);
                 JOptionPane.showMessageDialog(null, ("El valor en " + distanciaConversor.getNombre()+"s"
-                        + " es de " + numberFormat.format(valorConvertido)));
+                        + " es de " + valorConvertido));
                 break;
 
             case 2:
+                List<Tiempo> tiempos = new ArrayList<>();
+
+                tiempos.add(new Tiempo("segundo", 1));
+                tiempos.add(new Tiempo("minuto", 0.0166667));
+                tiempos.add(new Tiempo("hora", 0.000277778));
+                tiempos.add(new Tiempo("milisegundo",1000));
+                tiempos.add(new Tiempo("microsegundo", 1000000.8));
+                
+                Tiempo tiempoBase = introducirBase(tiempos);
+
+                Tiempo tiempoConversor= conversorBase(tiempos, tiempoBase);
+
+                valorConverir = introducirValor();
+                
+                valorConvertido = tiempoBase.obtenerConversion(tiempoConversor, valorConverir);
+                JOptionPane.showMessageDialog(null, ("El valor en " + tiempoConversor.getNombre()+"s"
+                        + " es de " + valorConvertido));
                 break;
 
             default:
                 JOptionPane.showMessageDialog(null, "Algo inesperado ocurrió", "alert", JOptionPane.ERROR_MESSAGE);
+                
+                
         }
+        
+            if (JOptionPane.showConfirmDialog(null, "¿Desea continuar?", "Aviso de salida",
+            JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+            continuar=false;
+        } 
+        } while (continuar);
+        
 
     }
 
@@ -97,22 +130,34 @@ public class main {
         return -1;
     }
 
+    /**
+     * Se encarga de solicitar un valor decimal positivo en donde si no se cumple se llamará recursivamente 
+     * hasta su cumplimiento
+     * 
+     * @return valor decimal positivo
+     **/
     public static double introducirValor() {
         try {
             String inputValue = JOptionPane.showInputDialog("Digite el valor a convertir: ");
             return Double.parseDouble(inputValue);
         } catch (NullPointerException e) {
-            return -1;
+            
+            return -1; //Retorna un NullPointerException cuando se cierra la ventana por lo que solamente se deja cerrar
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Valor no esperado", "alert", JOptionPane.ERROR_MESSAGE);
-            return introducirValor();
+            return introducirValor(); //Se llama de manera recursiva hasta que se digite bien o se cierre la pestaña
         }
     }
-    
+    /**
+     * Se encarga solicitar la selección de un tipo que extiende de la clase de Cambio T pasada una lista 
+     * de tipos
+     * @return el tipo seleccionado
+     **/
      public static <T extends Cambio> T introducirBase(List<T> valoresCambios)
      {
+        String nombreClase= valoresCambios.get(0).getClass().getSimpleName();
          T distanciaSeleccionada = (T) JOptionPane.showInputDialog(null,
-                        "Elija moneda base", "Input",
+                         "Elija "+nombreClase.toLowerCase()+" base", "Input",
                         JOptionPane.INFORMATION_MESSAGE, null,
                         valoresCambios.toArray(), valoresCambios.get(0).getNombre());
          return distanciaSeleccionada;
@@ -128,9 +173,10 @@ public class main {
       **/
      public static <T extends Cambio> T conversorBase (List<T> valoresCambios,T cambioBase)
      {
-          T distanciaConversor
+        String nombreClase= cambioBase.getClass().getSimpleName();
+        T distanciaConversor
                         = (T) JOptionPane.showInputDialog(null,
-                                "Elija moneda a convertir", "Input",
+                                "Elija "+nombreClase.toLowerCase()+" a convertir", "Input",
                                 JOptionPane.INFORMATION_MESSAGE, null,
                                 valoresCambios.stream().filter(cambio -> !cambio.getNombre().equalsIgnoreCase(cambioBase.getNombre())).collect(Collectors.toList()).toArray(),
                                 valoresCambios.get(0).getNombre());

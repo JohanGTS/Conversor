@@ -52,7 +52,10 @@ public abstract class Cambio {
      * 
      * @return La representación en el Cambio pasado como parámetro por la cantidad
      **/
+    
     public double obtenerConversion(Cambio cambio, double cantidad){
+        if(cantidad<=0)
+            throw new IllegalArgumentException("Valor fuera de rango");
         return obtenerConversion(cambio)*cantidad;
     }
 
