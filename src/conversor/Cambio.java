@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 public abstract class Cambio {
     private String nombre;
     private double valorReferente;
-
+    
     
     public Cambio(String nombre, double valorReferente) {
         this.nombre = nombre;
@@ -51,6 +51,7 @@ public abstract class Cambio {
      * @param cantidad Cantidad del Cambio
      * 
      * @return La representación en el Cambio pasado como parámetro por la cantidad
+     * @throws IllegalArgumentException al pasar como parámetro un valor menor o igual a 0
      **/
     
     public double obtenerConversion(Cambio cambio, double cantidad){
@@ -61,6 +62,6 @@ public abstract class Cambio {
 
     @Override
     public String toString() {
-        return   nombre ;
+        return   this.nombre ;
     }
 }

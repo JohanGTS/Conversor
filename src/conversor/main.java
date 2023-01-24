@@ -18,6 +18,7 @@ public class main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
 
         String[] tipoConversor = {"Moneda", "Distancia", "Tiempo"};
         boolean continuar = true;
@@ -51,7 +52,7 @@ public class main {
                 {
                      valorConvertido = monedaBase.obtenerConversion(monedaConversor, valorConverir);
                 } catch (Exception e) {
-                    break;
+                    break;//salimos del switch
                 }
                 
                 
@@ -74,8 +75,13 @@ public class main {
                 Distancia distanciaConversor= conversorBase(distancias, distanciaBase);
 
                 valorConverir = introducirValor();
+                try{
+                    valorConvertido = distanciaBase.obtenerConversion(distanciaConversor, valorConverir);
+                }
+                catch (Exception ex) {
+                    break;//salimos del switch
+                }
                 
-                 valorConvertido = distanciaBase.obtenerConversion(distanciaConversor, valorConverir);
                 JOptionPane.showMessageDialog(null, ("El valor en " + distanciaConversor.getNombre()+"s"
                         + " es de " + valorConvertido));
                 break;
@@ -95,7 +101,12 @@ public class main {
 
                 valorConverir = introducirValor();
                 
-                valorConvertido = tiempoBase.obtenerConversion(tiempoConversor, valorConverir);
+                try {
+                    valorConvertido = tiempoBase.obtenerConversion(tiempoConversor, valorConverir);
+                } catch (Exception e) {
+                    break;
+                }
+                
                 JOptionPane.showMessageDialog(null, ("El valor en " + tiempoConversor.getNombre()+"s"
                         + " es de " + valorConvertido));
                 break;
@@ -139,6 +150,8 @@ public class main {
     public static double introducirValor() {
         try {
             String inputValue = JOptionPane.showInputDialog("Digite el valor a convertir: ");
+            if(Double.parseDouble(inputValue)<=0)
+                throw new IllegalArgumentException("Valor inesperado");
             return Double.parseDouble(inputValue);
         } catch (NullPointerException e) {
             
