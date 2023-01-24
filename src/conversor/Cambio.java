@@ -57,6 +57,7 @@ public abstract class Cambio {
     public double obtenerConversion(Cambio cambio, double cantidad){
         if(cantidad<=0)
             throw new IllegalArgumentException("Valor fuera de rango");
+        
         return obtenerConversion(cambio)*cantidad;
     }
 

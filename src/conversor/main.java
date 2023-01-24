@@ -57,7 +57,7 @@ public class main {
                 
                 
                 JOptionPane.showMessageDialog(null, ("El valor en " + monedaConversor.getNombre()+"s"
-                        + " es de " +valorConvertido));
+                        + " es de " +String.format("%.4f", valorConvertido)));
                 break;
             case 1:
                 
@@ -67,7 +67,7 @@ public class main {
                 distancias.add(new Distancia("Milimetro", 0.001));
                 distancias.add(new Distancia("Centimetro", 0.01));
                 distancias.add(new Distancia("Kilometro",1000));
-                distancias.add(new Distancia("Milla", 0.000621371));
+                distancias.add(new Distancia("Milla", 1609.34));
                 distancias.add(new Distancia("Pie",0.3048));
                 
                 Distancia distanciaBase = introducirBase(distancias);
@@ -83,7 +83,7 @@ public class main {
                 }
                 
                 JOptionPane.showMessageDialog(null, ("El valor en " + distanciaConversor.getNombre()+"s"
-                        + " es de " + valorConvertido));
+                        + " es de " +  String.format("%.4f", valorConvertido)));
                 break;
 
             case 2:
@@ -92,8 +92,8 @@ public class main {
                 tiempos.add(new Tiempo("Segundo", 1));
                 tiempos.add(new Tiempo("Minuto", 0.0166667));
                 tiempos.add(new Tiempo("Hora", 0.000277778));
-                tiempos.add(new Tiempo("Milisegundo",1000));
-                tiempos.add(new Tiempo("Microsegundo", 1000000.8));
+                tiempos.add(new Tiempo("Milisegundo",0.001));
+                tiempos.add(new Tiempo("Microsegundo", 0.000001));
                 
                 Tiempo tiempoBase = introducirBase(tiempos);
 
@@ -108,7 +108,7 @@ public class main {
                 }
                 
                 JOptionPane.showMessageDialog(null, ("El valor en " + tiempoConversor.getNombre()+"s"
-                        + " es de " + valorConvertido));
+                        + " es de " + String.format("%.4f", valorConvertido) ));
                 break;
 
             default:
