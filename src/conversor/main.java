@@ -35,12 +35,12 @@ public class main {
             case 0:
                 List<Moneda> monedas = new ArrayList<>();
 
-                monedas.add(new Moneda("peso dominicano", 0.018));
-                monedas.add(new Moneda("dolar estadounidense", 1));
-                monedas.add(new Moneda("peso mexicano", 0.052));
-                monedas.add(new Moneda("dolar canadiense", 0.75));
-                monedas.add(new Moneda("euro", 1.07));
-                monedas.add(new Moneda("libra esterlina", 1.22));
+                monedas.add(new Moneda("Peso dominicano", 0.018));
+                monedas.add(new Moneda("Dolar estadounidense", 1));
+                monedas.add(new Moneda("Peso mexicano", 0.052));
+                monedas.add(new Moneda("Dolar canadiense", 0.75));
+                monedas.add(new Moneda("Euro", 1.07));
+                monedas.add(new Moneda("Libra esterlina", 1.22));
 
                 Moneda monedaBase = introducirBase(monedas);
 
@@ -63,12 +63,12 @@ public class main {
                 
                 List<Distancia> distancias = new ArrayList<>();
 
-                distancias.add(new Distancia("metro", 1));
-                distancias.add(new Distancia("milimetro", 0.001));
-                distancias.add(new Distancia("centimetro", 0.01));
-                distancias.add(new Distancia("kilometro",1000));
-                distancias.add(new Distancia("milla", 0.000621371));
-                distancias.add(new Distancia("pie",0.3048));
+                distancias.add(new Distancia("Metro", 1));
+                distancias.add(new Distancia("Milimetro", 0.001));
+                distancias.add(new Distancia("Centimetro", 0.01));
+                distancias.add(new Distancia("Kilometro",1000));
+                distancias.add(new Distancia("Milla", 0.000621371));
+                distancias.add(new Distancia("Pie",0.3048));
                 
                 Distancia distanciaBase = introducirBase(distancias);
 
@@ -89,11 +89,11 @@ public class main {
             case 2:
                 List<Tiempo> tiempos = new ArrayList<>();
 
-                tiempos.add(new Tiempo("segundo", 1));
-                tiempos.add(new Tiempo("minuto", 0.0166667));
-                tiempos.add(new Tiempo("hora", 0.000277778));
-                tiempos.add(new Tiempo("milisegundo",1000));
-                tiempos.add(new Tiempo("microsegundo", 1000000.8));
+                tiempos.add(new Tiempo("Segundo", 1));
+                tiempos.add(new Tiempo("Minuto", 0.0166667));
+                tiempos.add(new Tiempo("Hora", 0.000277778));
+                tiempos.add(new Tiempo("Milisegundo",1000));
+                tiempos.add(new Tiempo("Microsegundo", 1000000.8));
                 
                 Tiempo tiempoBase = introducirBase(tiempos);
 
